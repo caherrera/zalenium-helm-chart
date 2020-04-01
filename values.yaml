@@ -25,10 +25,13 @@ hub:
   liveness:
     enabled: true
     initialDelaySeconds: 180
-    timeout: 5
+    timeout: 10
+    periodSeconds: 5
   readiness:
     enabled: true
-    timeout: 5
+    timeout: 10
+    initialDelaySeconds: 180
+    periodSeconds: 5
 
   ## Timeout for probe Hub readiness via HTTP request on Hub console
   #readinessTimeout: 1

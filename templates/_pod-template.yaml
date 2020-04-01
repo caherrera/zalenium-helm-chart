@@ -60,8 +60,8 @@ spec:
             value: Basic {{ template "basicAuth.b64" . }}
           {{- end}}
         initialDelaySeconds: {{ .Values.hub.liveness.initialDelaySeconds }}
-        periodSeconds: 5
-        timeoutSeconds: {{ default .Values.hub.livenessTimeout .Values.hub.liveness.timeout }}
+        periodSeconds: {{ default 5 .Values.hub.liveness.periodSeconds }}
+        timeoutSeconds: {{ default 10 .Values.hub.livenessTimeout .Values.hub.liveness.timeout }}
       {{- end}}
       {{- if eq true .Values.hub.readiness.enabled }}
       readinessProbe:
@@ -74,6 +74,9 @@ spec:
             value: Basic {{ template "basicAuth.b64" . }}
           {{- end}}
         timeoutSeconds: {{ default .Values.hub.readinessTimeout .Values.hub.readiness.timeout }}
+        initialDelaySeconds: {{ default 10 .Values.hub.readiness.initialDelaySeconds }}
+        periodSeconds: {{ default 5 .Values.hub.readiness.periodSeconds }}
+        
       {{- end}}
       env:
         - name: ZALENIUM_KUBERNETES_CPU_REQUEST
